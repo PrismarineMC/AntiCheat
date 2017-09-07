@@ -4,7 +4,7 @@
  * @name AntiCheat
  * @version 1.0.0
  * @author Encritary
- * @api 3.0.0-ALPHA7
+ * @api 3.0.0
  * @main AntiCheat\AntiCheat
  */
 
@@ -23,6 +23,10 @@ class AntiCheat extends PluginBase implements Listener{
 	protected $unhandlingBlocks = []; //Blocks that must not be handled by anti-cheat
 
 	public function onEnable(){
+		if($this->getServer()->getName() !== "Prismarine"){
+			$this->getLogger()->warning("This server software isn't supported. Change it to github.com/PrismarineMC/Prismarine or enjoy featureless AntiCheat.");
+			return;
+		}
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		$this->unhandlingBlocks = [85, 113, 183, 184, 185, 186, 187, 212, 139];
 	}
@@ -43,7 +47,7 @@ class AntiCheat extends PluginBase implements Listener{
 		$diffZ = $player->z - $newPos->z;
 		$diff = ($diffX ** 2 + $diffY ** 2 + $diffZ ** 2) / ($tickDiff ** 2);
 		if($diff > 0.0625){
-			$player->sendMessage("§l§4[AntiCheat] §r§cНе используй читы! Рано или поздно, тебя поймают!");
+			$player->sendMessage("§l§4[AntiCheat] §r§cDon't use cheats, otherwise you will be banned by admin!");
  			$event->setCancelled();
  			return;
  		}
@@ -62,7 +66,7 @@ class AntiCheat extends PluginBase implements Listener{
 					if($player->getInAirTicks() < 100){
 						$player->setMotion(new Vector3(0, $expectedVelocity, 0));
 					}else{
-						$player->sendMessage("§l§4[AntiCheat] §r§cНе используй читы! Рано или поздно, тебя поймают!");
+						$player->sendMessage("§l§4[AntiCheat] §r§cDon't use cheats, otherwise you will be banned by admin!");
 					}
 				}
 			}
