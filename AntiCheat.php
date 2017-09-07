@@ -56,7 +56,7 @@ class AntiCheat extends PluginBase implements Listener{
 			if($player->getInAirTicks() > 10 and !$player->isSleeping() and !$player->isImmobile() and !$player->getAllowFlight()){
 				$blockUnder = $player->getLevel()->getBlock(new Vector3($player->x, $player->y - 1, $player->z));
 				if(in_array($blockUnder->getId(), $this->unhandlingBlocks)){ //Fences are handling incorrectly by PMMP
-					$player->resetFallDistance();
+					$player->resetAirTicks();
 					return;
 				}
 				$expectedVelocity = -0.08 / 0.02 - (-0.08 / 0.02) * exp(-0.02 * ($player->getInAirTicks() - $player->getStartAirTicks()));
